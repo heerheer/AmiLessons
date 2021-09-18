@@ -5,3 +5,10 @@ E:\RiderProjects\WhatLessonNow\AmiLesson.Core\bin\x86\Build\AmiLesson.MQ.dll
 E:\RiderProjects\WhatLessonNow\AmiLesson.Core\bin\x86\Build\AmiLesson.MQ.pdb
 E:\RiderProjects\WhatLessonNow\AmiLesson.Core\obj\x86\Build\AmiLesson.MQ.dll
 E:\RiderProjects\WhatLessonNow\AmiLesson.Core\obj\x86\Build\AmiLesson.MQ.pdb
+E:\Amiable\Projects\TjutHelperBot\AmiLesson.Core\bin\x86\Build\AmiLesson.MQ.dll.config
+E:\Amiable\Projects\TjutHelperBot\AmiLesson.Core\bin\x86\Build\AmiLesson.MQ.dll
+E:\Amiable\Projects\TjutHelperBot\AmiLesson.Core\bin\x86\Build\AmiLesson.MQ.pdb
+E:\Amiable\Projects\TjutHelperBot\AmiLesson.Core\obj\x86\Build\AmiLesson.Core.csproj.AssemblyReference.cache
+E:\Amiable\Projects\TjutHelperBot\AmiLesson.Core\obj\x86\Build\AmiLesson.Core.csproj.CoreCompileInputs.cache
+E:\Amiable\Projects\TjutHelperBot\AmiLesson.Core\obj\x86\Build\AmiLesson.MQ.dll
+E:\Amiable\Projects\TjutHelperBot\AmiLesson.Core\obj\x86\Build\AmiLesson.MQ.pdb

@@ -541,11 +541,11 @@
   "project": {
     "version": "1.0.4",
     "restore": {
-      "projectUniqueName": "E:\\RiderProjects\\WhatLessonNow\\AmiLesson.Adapters\\AmiLesson.Adapters.csproj",
+      "projectUniqueName": "E:\\Amiable\\Projects\\TjutHelperBot\\AmiLesson.Adapters\\AmiLesson.Adapters.csproj",
       "projectName": "AmiLesson.Adapters",
-      "projectPath": "E:\\RiderProjects\\WhatLessonNow\\AmiLesson.Adapters\\AmiLesson.Adapters.csproj",
+      "projectPath": "E:\\Amiable\\Projects\\TjutHelperBot\\AmiLesson.Adapters\\AmiLesson.Adapters.csproj",
       "packagesPath": "C:\\Users\\17674\\.nuget\\packages\\",
-      "outputPath": "E:\\RiderProjects\\WhatLessonNow\\AmiLesson.Adapters\\obj\\",
+      "outputPath": "E:\\Amiable\\Projects\\TjutHelperBot\\AmiLesson.Adapters\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -566,8 +566,8 @@
         "netstandard2.0": {
           "targetAlias": "netstandard2.0",
           "projectReferences": {
-            "E:\\RiderProjects\\WhatLessonNow\\AmiLesson.SDK\\AmiLesson.SDK.csproj": {
-              "projectPath": "E:\\RiderProjects\\WhatLessonNow\\AmiLesson.SDK\\AmiLesson.SDK.csproj"
+            "E:\\Amiable\\Projects\\TjutHelperBot\\AmiLesson.SDK\\AmiLesson.SDK.csproj": {
+              "projectPath": "E:\\Amiable\\Projects\\TjutHelperBot\\AmiLesson.SDK\\AmiLesson.SDK.csproj"
             }
           }
         }

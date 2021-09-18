@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Amiable.SDK.Enum;
@@ -8,6 +10,7 @@ using Amiable.SDK.Interface;
 using Amiable.SDK.Wrapper;
 using Quartz;
 using Quartz.Impl;
+using static AmiLesson.Code.OrderJob;
 
 namespace AmiLesson.Code
 {
@@ -35,8 +38,74 @@ namespace AmiLesson.Code
 
             Console.WriteLine("[Ami课表助手]调度器启用完成");
             Console.WriteLine("[Ami课表助手]每天21:00分会在群788599289发送提醒");
+
+            var orderJob = JobBuilder.Create<OrderJob>().Build();
+            var trigger2 = TriggerBuilder.Create()
+                .WithIdentity("Trigger_Order")
+                .WithCronSchedule("0 0 7 0 0 ? *")
+                .Build();
+            Scheduler.ScheduleJob(orderJob, trigger2);
+            Console.WriteLine("[Ami自动预约助手]调度器启用完成");
+
         }
     }
+
+    public class OrderJob : IJob
+    {
+        public async Task Execute(IJobExecutionContext context)
+        {
+            var now = DateTime.Now;
+            Console.WriteLine($"开始执行计划...{DateTime.Now}");
+            List<Task> tasks = new();
+            var list = BathRoomConfigUtil.GetAllAutoOrderUser();
+            var helper = new BathroomOrderHelper();
+
+            var sb = new StringBuilder();
+            foreach (var item in list)
+            {
+                var task = new Task(() =>
+                {
+                    var helper = new BathroomOrderHelper();
+                    helper.Login(item.user, item.pwd).Wait();
+
+                    if (helper.Logined)
+                    {
+                        var list_1 = helper.GetList().Result;
+                        var list_2 = helper.GetRoomList(list_1.Find(x => x.name == "南区男浴室").id).Result;
+
+                        var id = list_2.Last(x => x.remain >= 1).id;
+                        var result = helper.Order(id).Result;
+                        if (result.Item1)
+                            InnerLog($"[{item.user}]预约成功->{result.Item2}", sb);
+                        else
+                            InnerLog($"[{item.user}]预约失败!", sb);
+
+
+                    }
+
+
+                });
+
+                tasks.Add(task);
+                task.Start();
+            }
+
+            await Task.WhenAll(tasks.ToArray());
+            EnableEvent.Wrapper.SetData(new()
+            { Robot = 3324288929 });
+            EnableEvent.Wrapper.SendGroupMessage("788599289", sb.ToString());
+
+
+
+        }
+
+        public void InnerLog(string str, StringBuilder sb)
+        {
+            sb.AppendLine(str);
+            Console.WriteLine(str);
+        }
+    }
+
 
     public class TopJob : IJob
     {
@@ -45,7 +114,7 @@ namespace AmiLesson.Code
             return Task.Factory.StartNew(async () =>
             {
                 Console.WriteLine($"[{DateTime.Now.ToShortTimeString()}][课表Bot]定时任务...");
-                var qqs = new long[] { 2356045563, 1767407822 };
+                var qqs = new long[] { 2356045563, 1767407822, 1443116043 };
                 foreach (var qq in qqs)
                 {
                     var file = new FileInfo(Path.Combine(AppContext.BaseDirectory, "Ami", "Lessons", $"{qq}.json"));
@@ -71,7 +140,7 @@ namespace AmiLesson.Code
                     }
 
                     EnableEvent.Wrapper.SetData(new()
-                        { Robot = 3324288929 });
+                    { Robot = 3324288929 });
                     EnableEvent.Wrapper.SendGroupMessage("788599289", sb.ToString());
                     await Task.Delay(8000);
                 }

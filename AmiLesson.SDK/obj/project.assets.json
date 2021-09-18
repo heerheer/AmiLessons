@@ -522,11 +522,11 @@
   "project": {
     "version": "1.0.4",
     "restore": {
-      "projectUniqueName": "E:\\RiderProjects\\WhatLessonNow\\AmiLesson.SDK\\AmiLesson.SDK.csproj",
+      "projectUniqueName": "E:\\Amiable\\Projects\\TjutHelperBot\\AmiLesson.SDK\\AmiLesson.SDK.csproj",
       "projectName": "AmiLesson.SDK",
-      "projectPath": "E:\\RiderProjects\\WhatLessonNow\\AmiLesson.SDK\\AmiLesson.SDK.csproj",
+      "projectPath": "E:\\Amiable\\Projects\\TjutHelperBot\\AmiLesson.SDK\\AmiLesson.SDK.csproj",
       "packagesPath": "C:\\Users\\17674\\.nuget\\packages\\",
-      "outputPath": "E:\\RiderProjects\\WhatLessonNow\\AmiLesson.SDK\\obj\\",
+      "outputPath": "E:\\Amiable\\Projects\\TjutHelperBot\\AmiLesson.SDK\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

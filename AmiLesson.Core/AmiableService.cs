@@ -40,6 +40,7 @@ namespace Amiable.Core
 
             AddPluginEvent<GroupEvent>();
             AddPluginEvent<EnableEvent>();
+            AddPluginEvent<GroupMsg_Order>();
 
         }
 

@@ -13,6 +13,7 @@ using System.Net.Http.Headers;
 using System.Security.Cryptography;
 using System.Text;
 using DingtalkChatbotSdk.Models;
+using System.Linq;
 
 namespace WhatLessonNow
 {
@@ -26,8 +27,63 @@ namespace WhatLessonNow
             }
         }
 
+        public static async Task Main(string[] args)
+        {
+            var now = DateTime.Now;
+            Console.WriteLine($"开始执行计划...{DateTime.Now}");
+            List<Task> tasks = new();
+            var list = new[] { ("20191953", "800518"), ("20191881", "191881"), ("20191951", "566710"), ("20191954", "191954"), ("20191955", "191955")/*, ("20191952", "191952")*/ };
+            var helper = new BathroomOrderHelper();
 
-        public async static Task Main(string[] args)
+            await helper.Login(list[0].Item1, list[0].Item2);
+            var orders = await helper.GetOrders();
+            orders.ForEach(x => {
+                Console.WriteLine($"{x.bathRoomName}-{x.period}-{DateTimeOffset.FromUnixTimeMilliseconds(x.createTime).ToLocalTime()}");
+            });
+
+            {
+
+                foreach (var item in list)
+                {
+                    var task = new Task(() =>
+                    {
+                        var helper = new BathroomOrderHelper();
+                        helper.Login(item.Item1, item.Item2).Wait();
+
+                        if (helper.Logined)
+                        {
+                            var list = helper.GetList().Result;
+                            var list2 = helper.GetRoomList(list.Find(x => x.name == "南区男浴室").id).Result;
+
+                        }
+
+                    //var id = list2.Last(x => x.remain >= 1).id;
+                    //Console.WriteLine($"正在为{item.Item1}预约{id}");
+                    //var result = helper.Order(id).Result;
+                    //if (result.Item1)
+                    //{
+                    //    Console.WriteLine($"[{item.Item1}]预约成功->{result.Item2}");
+                    //}
+                    //else
+                    //{
+                    //    Console.WriteLine($"[{item.Item1}]预约失败!");
+
+                    //}
+
+                });
+
+                    tasks.Add(task);
+                    task.Start();
+                }
+                Task.WaitAll(tasks.ToArray());
+                Console.WriteLine($"{tasks.Count}个账户计划执行完成...总计{(DateTime.Now - now).TotalMilliseconds}毫秒");
+
+            }
+            //await helper.Login("20191953", "800518");
+            Console.ReadLine();
+        }
+
+        public async static Task Main3(string[] args)
         {
             var md = $"![xxx](http://server1.heerdev.top/A/1767407822_temp.jpg)";
 

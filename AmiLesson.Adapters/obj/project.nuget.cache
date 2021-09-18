@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "WDCD2/Zd76Q1UCF0N/xzys6OgFkOSoMf4mUznQCzRDNOHfyClK1HvXus+zs4q0OZQ7sBff42rUg4HgB+bIoBmA==",
+  "dgSpecHash": "2cXJG7Xhq9bxEI3zJzR0hyc6ffDO9fkNUKEX7yZ1Zf5Tmyb43L8Clk/NxhAW9vxalodufVvAL1vwq9VQTyvwAg==",
   "success": true,
-  "projectFilePath": "E:\\RiderProjects\\WhatLessonNow\\AmiLesson.Adapters\\AmiLesson.Adapters.csproj",
+  "projectFilePath": "E:\\Amiable\\Projects\\TjutHelperBot\\AmiLesson.Adapters\\AmiLesson.Adapters.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\17674\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\5.0.0\\microsoft.bcl.asyncinterfaces.5.0.0.nupkg.sha512",
     "C:\\Users\\17674\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
