@@ -1,0 +1,4 @@
+E:\Amiable\source\Amiable.Adapters\obj\Debug\netstandard2.1\Amiable.Adapters.csproj.AssemblyReference.cache
+E:\Amiable\source\Amiable.Adapters\obj\Debug\netstandard2.1\Amiable.Adapters.AssemblyInfoInputs.cache
+E:\Amiable\source\Amiable.Adapters\obj\Debug\netstandard2.1\Amiable.Adapters.AssemblyInfo.cs
+E:\Amiable\source\Amiable.Adapters\obj\Debug\netstandard2.1\Amiable.Adapters.csproj.CoreCompileInputs.cache

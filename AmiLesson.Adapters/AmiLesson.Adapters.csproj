@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <PackageVersion>1.0.4</PackageVersion>
+    <Title>Amiable.Adapters</Title>
+    <Description>Amiable官方API与事件适配器包</Description>
+    <AssemblyVersion>1.0.3</AssemblyVersion>
+    <RootNamespace>Amiable.Adapters</RootNamespace>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Ono\" />
+    <Folder Include="LYP\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Text.Json" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AmiLesson.SDK\AmiLesson.SDK.csproj" />
+  </ItemGroup>
+
+</Project>

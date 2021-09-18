@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Amiable.Adapters</id>
+    <version>1.0.3</version>
+    <title>Amiable.Adapters</title>
+    <authors>Heer kaisair</authors>
+    <license type="file">you should konw.txt</license>
+    <licenseUrl>https://aka.ms/deprecateLicenseUrl</licenseUrl>
+    <icon>Amiable_Icon.png</icon>
+    <description>Amiable官方API与事件适配器包</description>
+    <dependencies>
+      <group targetFramework=".NETStandard2.0">
+        <dependency id="Amiable.SDK" version="1.0.3" exclude="Build,Analyzers" />
+        <dependency id="System.Text.Json" version="5.0.0" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="E:\Amiable\source\publish\nuget\netstandard2.0\Amiable.Adapters.dll" target="lib\netstandard2.0\Amiable.Adapters.dll" />
+    <file src="E:\Amiable\source\Amiable_Icon.png" target="Amiable_Icon.png" />
+    <file src="E:\Amiable\source\you should konw.txt" target="you should konw.txt" />
+  </files>
+</package>

@@ -1,0 +1,7 @@
+E:\RiderProjects\WhatLessonNow\AmiLesson.Core\obj\x86\Build\AmiLesson.Core.csproj.AssemblyReference.cache
+E:\RiderProjects\WhatLessonNow\AmiLesson.Core\obj\x86\Build\AmiLesson.Core.csproj.CoreCompileInputs.cache
+E:\RiderProjects\WhatLessonNow\AmiLesson.Core\bin\x86\Build\AmiLesson.MQ.dll.config
+E:\RiderProjects\WhatLessonNow\AmiLesson.Core\bin\x86\Build\AmiLesson.MQ.dll
+E:\RiderProjects\WhatLessonNow\AmiLesson.Core\bin\x86\Build\AmiLesson.MQ.pdb
+E:\RiderProjects\WhatLessonNow\AmiLesson.Core\obj\x86\Build\AmiLesson.MQ.dll
+E:\RiderProjects\WhatLessonNow\AmiLesson.Core\obj\x86\Build\AmiLesson.MQ.pdb
