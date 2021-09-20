@@ -20,6 +20,7 @@ namespace AmiLesson.Code
             var ee = e.AsMessageEventArgs();
             var message = ee.RawMessage;
 
+
             if (message == "洗澡#我的二维码")
             {
                 var account = BathRoomConfigUtil.GetAccount(ee.UserId);
@@ -124,6 +125,10 @@ namespace AmiLesson.Code
                 sb.AppendLine($"已关闭自动预约");
                 ee.SendMessage(sb.ToString());
 
+            }
+
+            if (message == "洗澡#手动预约")
+            {
             }
         }
     }

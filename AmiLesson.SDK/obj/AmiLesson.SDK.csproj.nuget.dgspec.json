@@ -10,14 +10,11 @@
         "projectUniqueName": "E:\\Amiable\\Projects\\TjutHelperBot\\AmiLesson.SDK\\AmiLesson.SDK.csproj",
         "projectName": "AmiLesson.SDK",
         "projectPath": "E:\\Amiable\\Projects\\TjutHelperBot\\AmiLesson.SDK\\AmiLesson.SDK.csproj",
-        "packagesPath": "C:\\Users\\17674\\.nuget\\packages\\",
+        "packagesPath": "C:\\Users\\HeerKaisair\\.nuget\\packages\\",
         "outputPath": "E:\\Amiable\\Projects\\TjutHelperBot\\AmiLesson.SDK\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\17674\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\HeerKaisair\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -25,8 +22,8 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {},
-          "https://ci.appveyor.com/nuget/nugetizer3000": {}
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "netstandard2.0": {

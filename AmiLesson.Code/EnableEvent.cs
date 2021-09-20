@@ -31,7 +31,7 @@ namespace AmiLesson.Code
             var job = JobBuilder.Create<TopJob>().Build();
             // ReSharper disable once SuspiciousTypeConversion.Global
             var trigger = TriggerBuilder.Create()
-                .WithIdentity("Trigger21")
+                .WithIdentity("Trigger_Lessons")
                 .WithSchedule(CronScheduleBuilder.DailyAtHourAndMinute(21, 0))
                 .Build();
             Scheduler.ScheduleJob(job, trigger);
@@ -42,11 +42,10 @@ namespace AmiLesson.Code
             var orderJob = JobBuilder.Create<OrderJob>().Build();
             var trigger2 = TriggerBuilder.Create()
                 .WithIdentity("Trigger_Order")
-                .WithCronSchedule("0 0 7 0 0 ? *")
+                .WithSchedule(CronScheduleBuilder.DailyAtHourAndMinute(7, 0))
                 .Build();
             Scheduler.ScheduleJob(orderJob, trigger2);
             Console.WriteLine("[Ami自动预约助手]调度器启用完成");
-
         }
     }
 
@@ -79,11 +78,7 @@ namespace AmiLesson.Code
                             InnerLog($"[{item.user}]预约成功->{result.Item2}", sb);
                         else
                             InnerLog($"[{item.user}]预约失败!", sb);
-
-
                     }
-
-
                 });
 
                 tasks.Add(task);
@@ -92,11 +87,8 @@ namespace AmiLesson.Code
 
             await Task.WhenAll(tasks.ToArray());
             EnableEvent.Wrapper.SetData(new()
-            { Robot = 3324288929 });
+                { Robot = 3324288929 });
             EnableEvent.Wrapper.SendGroupMessage("788599289", sb.ToString());
-
-
-
         }
 
         public void InnerLog(string str, StringBuilder sb)
@@ -140,7 +132,7 @@ namespace AmiLesson.Code
                     }
 
                     EnableEvent.Wrapper.SetData(new()
-                    { Robot = 3324288929 });
+                        { Robot = 3324288929 });
                     EnableEvent.Wrapper.SendGroupMessage("788599289", sb.ToString());
                     await Task.Delay(8000);
                 }
