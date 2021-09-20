@@ -51,7 +51,7 @@ namespace AmiLesson.Code
             // ReSharper disable once SuspiciousTypeConversion.Global
             var autoCheckOrderTrigeer = TriggerBuilder.Create()
                 .WithIdentity("Trigger_CheckOrder")
-                .WithCronSchedule("0/4 0 * * * ? *")
+                .WithCronSchedule("0 0 * * * ? *")
                 .Build();
             Scheduler.ScheduleJob(autoCheckOrderJob, autoCheckOrderTrigeer);
 
