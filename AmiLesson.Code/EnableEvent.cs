@@ -8,6 +8,7 @@ using Amiable.SDK.Enum;
 using Amiable.SDK.EventArgs;
 using Amiable.SDK.Interface;
 using Amiable.SDK.Wrapper;
+using AmiLesson.Code.Jobs;
 using Quartz;
 using Quartz.Impl;
 using static AmiLesson.Code.OrderJob;
@@ -45,6 +46,15 @@ namespace AmiLesson.Code
                 .WithSchedule(CronScheduleBuilder.DailyAtHourAndMinute(7, 0))
                 .Build();
             Scheduler.ScheduleJob(orderJob, trigger2);
+
+            var autoCheckOrderJob = JobBuilder.Create<CheckOrderJob>().Build();
+            // ReSharper disable once SuspiciousTypeConversion.Global
+            var autoCheckOrderTrigeer = TriggerBuilder.Create()
+                .WithIdentity("Trigger_CheckOrder")
+                .WithCronSchedule("0/4 0 * * * ? *")
+                .Build();
+            Scheduler.ScheduleJob(autoCheckOrderJob, autoCheckOrderTrigeer);
+
             Console.WriteLine("[Ami自动预约助手]调度器启用完成");
         }
     }
@@ -57,8 +67,6 @@ namespace AmiLesson.Code
             Console.WriteLine($"开始执行计划...{DateTime.Now}");
             List<Task> tasks = new();
             var list = BathRoomConfigUtil.GetAllAutoOrderUser();
-            var helper = new BathroomOrderHelper();
-
             var sb = new StringBuilder();
             foreach (var item in list)
             {

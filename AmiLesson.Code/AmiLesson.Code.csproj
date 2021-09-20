@@ -99,6 +99,7 @@
     <Compile Include="EnableEvent.cs" />
     <Compile Include="GroupEvent.cs" />
     <Compile Include="GroupMsg_Order.cs" />
+    <Compile Include="Jobs\CheckOrderJob.cs" />
     <Compile Include="LessonInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="YouKnow.cs" />

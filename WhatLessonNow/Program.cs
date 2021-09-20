@@ -14,6 +14,7 @@ using System.Security.Cryptography;
 using System.Text;
 using DingtalkChatbotSdk.Models;
 using System.Linq;
+using AmiLesson.Code.Jobs;
 
 namespace WhatLessonNow
 {
@@ -29,20 +30,26 @@ namespace WhatLessonNow
 
         public static async Task Main(string[] args)
         {
+            var SchedulerFactory = new StdSchedulerFactory();
+            var Scheduler = await SchedulerFactory.GetScheduler();
+            await Scheduler.Start();
+            var job = JobBuilder.Create<TestJob>().Build();
+            // ReSharper disable once SuspiciousTypeConversion.Global
+            var trigger = TriggerBuilder.Create()
+                .WithIdentity("Trigger_Lessons")
+                .WithCronSchedule("0/4 0 * * * ? *")
+                .Build();
+            Scheduler.ScheduleJob(job, trigger);
+            Console.ReadKey();
+        }
+
+        public static async Task Mainbalaba(string[] args)
+        {
             var now = DateTime.Now;
             Console.WriteLine($"开始执行计划...{DateTime.Now}");
             List<Task> tasks = new();
-            var list = new[] { ("20191953", "800518"), ("20191881", "191881"), ("20191951", "566710"), ("20191954", "191954"), ("20191955", "191955")/*, ("20191952", "191952")*/ };
-            var helper = new BathroomOrderHelper();
-
-            await helper.Login(list[0].Item1, list[0].Item2);
-            var orders = await helper.GetOrders();
-            orders.ForEach(x => {
-                Console.WriteLine($"{x.bathRoomName}-{x.period}-{DateTimeOffset.FromUnixTimeMilliseconds(x.createTime).ToLocalTime()}");
-            });
-
+            var list = new[] { ("20191953", "800518") };
             {
-
                 foreach (var item in list)
                 {
                     var task = new Task(() =>
@@ -55,29 +62,26 @@ namespace WhatLessonNow
                             var list = helper.GetList().Result;
                             var list2 = helper.GetRoomList(list.Find(x => x.name == "南区男浴室").id).Result;
 
+                            var id = list2.Last(x => x.remain >= 0).id;
+                            Console.WriteLine($"正在为{item.Item1}预约{id}");
+                            var result = helper.Order(id).Result;
+                            if (result.Item1)
+                            {
+                                Console.WriteLine($"[{item.Item1}]预约成功->{result.message}");
+                            }
+                            else
+                            {
+                                Console.WriteLine($"[{item.Item1}]预约失败!");
+                            }
                         }
-
-                    //var id = list2.Last(x => x.remain >= 1).id;
-                    //Console.WriteLine($"正在为{item.Item1}预约{id}");
-                    //var result = helper.Order(id).Result;
-                    //if (result.Item1)
-                    //{
-                    //    Console.WriteLine($"[{item.Item1}]预约成功->{result.Item2}");
-                    //}
-                    //else
-                    //{
-                    //    Console.WriteLine($"[{item.Item1}]预约失败!");
-
-                    //}
-
-                });
+                    });
 
                     tasks.Add(task);
                     task.Start();
                 }
+
                 Task.WaitAll(tasks.ToArray());
                 Console.WriteLine($"{tasks.Count}个账户计划执行完成...总计{(DateTime.Now - now).TotalMilliseconds}毫秒");
-
             }
             //await helper.Login("20191953", "800518");
             Console.ReadLine();
@@ -104,7 +108,9 @@ namespace WhatLessonNow
                     @"https://oapi.dingtalk.com/robot/send?access_token=c1a8a06ec01f79c3bfe56ba54263256b60cb486c8c99e38eceeb53cb8971a82b"
                     + $"&timestamp={timestamp}"
                     + $"&sign={sign}";
-                var content = new StringContent($"{{\"msgtype\": \"markdown\",\"markdown\": {{\"title\":\"噇暮的头像\",\"text\":\"{md}\"}}}}");
+                var content =
+                    new StringContent(
+                        $"{{\"msgtype\": \"markdown\",\"markdown\": {{\"title\":\"噇暮的头像\",\"text\":\"{md}\"}}}}");
                 content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                 var str = await client.PostAsync(url, content);
                 Console.WriteLine("POST完成");

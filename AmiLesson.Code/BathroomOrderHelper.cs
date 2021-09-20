@@ -6,6 +6,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+// ReSharper disable InconsistentNaming
 
 namespace AmiLesson.Code
 {
@@ -118,7 +119,7 @@ namespace AmiLesson.Code
         }
 
 
-        public async Task<(bool, string)> Order(int id)
+        public async Task<(bool succeed, string message)> Order(int id)
         {
             if (!Logined)
                 return (false, "未登入");
@@ -144,7 +145,35 @@ namespace AmiLesson.Code
                     else
                     {
                         Console.WriteLine("预约失败");
-                        return (false, "");
+                        return (false, data);
+                    }
+                }
+            }
+        }
+
+        public async Task<bool> CancelOrder(int id)
+        {
+            if (!Logined)
+                return false;
+            var url = $"http://ligong.deshineng.com:8082/brmclg/api/bathRoom/cancelClassRoomOrder?time={timestamp}&classroomorderid={id}";
+            StringContent stringContent = new("");
+            stringContent.Headers.ContentType = new("application/json");
+            AddHeader(stringContent);
+            using (HttpClient client = new())
+            {
+                var response = await client.PostAsync(url, stringContent);
+                var data = await response.Content.ReadAsStringAsync();
+                //Console.WriteLine(data);
+                using (var jdoc = JsonDocument.Parse(data))
+                {
+                    var text = jdoc.RootElement.GetProperty("data").GetProperty("succeed").GetString();
+                    if (text == "Y")
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
                     }
                 }
             }
