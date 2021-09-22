@@ -6,6 +6,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+
 // ReSharper disable InconsistentNaming
 
 namespace AmiLesson.Code
@@ -13,8 +14,8 @@ namespace AmiLesson.Code
     public class BathroomOrderHelper
     {
         private long timestamp;
-        private int loginId;
-        private string accessToken;
+        public int LoginId { get; set; }
+        public string AccessToken { get; set; }
 
         public bool Logined { get; set; } = false;
         public string user;
@@ -24,9 +25,10 @@ namespace AmiLesson.Code
         /// 分类列表
         /// </summary>
         private List<BathRoomListItem> AllRooms;
+
         public BathroomOrderHelper()
         {
-            timestamp = DateTimeOffset.Now.ToUnixTimeMilliseconds();//初始化时间戳
+            timestamp = DateTimeOffset.Now.ToUnixTimeMilliseconds(); //初始化时间戳
             //Console.WriteLine("时间戳为" + timestamp);
         }
 
@@ -47,20 +49,19 @@ namespace AmiLesson.Code
                 {
                     if (jdoc.RootElement.GetProperty("data").GetRawText() == "{}")
                     {
-
                         Console.WriteLine($"[{user}]登入失败");
                         Logined = false;
                         return;
-
                     }
-                    loginId = jdoc.RootElement.GetProperty("data").GetProperty("loginid").GetInt32();
-                    accessToken = jdoc.RootElement.GetProperty("data").GetProperty("token").GetString();
+
+                    LoginId = jdoc.RootElement.GetProperty("data").GetProperty("loginid").GetInt32();
+                    AccessToken = jdoc.RootElement.GetProperty("data").GetProperty("token").GetString();
                     Logined = true;
                     Console.WriteLine($"[{user}]登入成功");
-
                 }
             }
         }
+
         public async Task<List<BathRoomListItem>> GetList()
         {
             if (!Logined)
@@ -81,19 +82,22 @@ namespace AmiLesson.Code
                     AllRooms = JsonSerializer.Deserialize<List<BathRoomListItem>>(text);
                 }
             }
+
             foreach (var room in AllRooms)
             {
                 //Console.WriteLine($"[{room.name}]->id:{room.id}");
             }
-            return AllRooms;
 
+            return AllRooms;
         }
+
         public async Task<List<RoomContentItem>> GetRoomList(int id)
         {
             if (!Logined)
                 return new();
             List<RoomContentItem> roomContentList;
-            var url = $"http://ligong.deshineng.com:8082/brmclg/api/bathRoom/listBookStatus?time={timestamp}&bathroomid={id}";
+            var url =
+                $"http://ligong.deshineng.com:8082/brmclg/api/bathRoom/listBookStatus?time={timestamp}&bathroomid={id}";
             StringContent stringContent = new("");
             stringContent.Headers.ContentType = new("application/json");
             AddHeader(stringContent);
@@ -111,22 +115,23 @@ namespace AmiLesson.Code
                     roomContentList.ForEach(x =>
                     {
                         //Console.WriteLine($"[{x.period}]当前剩余:{x.remain};id:{x.id}");
-
                     });
                 }
             }
+
             return roomContentList;
         }
 
 
-        public async Task<(bool succeed, string message)> Order(int id)
+        public async Task<(bool succeed, string message)> Order(int id, int loginid, string accessToken)
         {
             if (!Logined)
                 return (false, "未登入");
-            var url = $"http://ligong.deshineng.com:8082/brmclg/api/bathRoom/bookOrder?time={timestamp}&bookstatusid={id}";
+            var url =
+                $"http://ligong.deshineng.com:8082/brmclg/api/bathRoom/bookOrder?time={timestamp}&bookstatusid={id}";
             StringContent stringContent = new("");
             stringContent.Headers.ContentType = new("application/json");
-            AddHeader(stringContent);
+            AddHeader(stringContent, loginid, accessToken);
             using (HttpClient client = new())
             {
                 var response = await client.PostAsync(url, stringContent);
@@ -144,18 +149,24 @@ namespace AmiLesson.Code
                     }
                     else
                     {
-                        Console.WriteLine("预约失败");
                         return (false, data);
                     }
                 }
             }
         }
 
+
+        public async Task<(bool succeed, string message)> Order(int id)
+        {
+            return await Order(id, this.LoginId, this.AccessToken);
+        }
+
         public async Task<bool> CancelOrder(int id)
         {
             if (!Logined)
                 return false;
-            var url = $"http://ligong.deshineng.com:8082/brmclg/api/bathRoom/cancelClassRoomOrder?time={timestamp}&classroomorderid={id}";
+            var url =
+                $"http://ligong.deshineng.com:8082/brmclg/api/bathRoom/cancelClassRoomOrder?time={timestamp}&classroomorderid={id}";
             StringContent stringContent = new("");
             stringContent.Headers.ContentType = new("application/json");
             AddHeader(stringContent);
@@ -181,7 +192,6 @@ namespace AmiLesson.Code
 
         public async Task<string> GetQrCode()
         {
-
             if (!Logined)
                 return "";
             var url = $"http://ligong.deshineng.com:8082/brmclg/api/bathRoom/getQcode?time={timestamp}";
@@ -203,9 +213,9 @@ namespace AmiLesson.Code
                 }
             }
         }
+
         public async Task<List<OrderListItem>> GetOrders()
         {
-
             if (!Logined)
                 return new();
             var url = $"http://ligong.deshineng.com:8082/brmclg/api/bathRoom/getBookOrderList?time={timestamp}";
@@ -216,8 +226,8 @@ namespace AmiLesson.Code
             using (HttpClient client = new())
             {
                 //添加头
-                client.DefaultRequestHeaders.Add("token", accessToken);
-                client.DefaultRequestHeaders.Add("loginid", loginId.ToString());
+                client.DefaultRequestHeaders.Add("token", AccessToken);
+                client.DefaultRequestHeaders.Add("loginid", LoginId.ToString());
 
                 var response = await client.GetAsync(url);
 
@@ -226,16 +236,24 @@ namespace AmiLesson.Code
                 //Console.WriteLine(data);
                 using (var jdoc = JsonDocument.Parse(data))
                 {
-                    List<OrderListItem> list = JsonSerializer.Deserialize<List<OrderListItem>>(jdoc.RootElement.GetProperty("data").GetProperty("bookOrderList").GetRawText());
+                    List<OrderListItem> list = JsonSerializer.Deserialize<List<OrderListItem>>(jdoc.RootElement
+                        .GetProperty("data").GetProperty("bookOrderList").GetRawText());
 
                     return list;
                 }
             }
         }
-        private void AddHeader(HttpContent httpContent)
+
+        private void AddHeader(HttpContent httpContent, int loginId, string accessToken)
         {
             httpContent.Headers.Add("token", accessToken);
             httpContent.Headers.Add("loginid", loginId.ToString());
+        }
+
+        private void AddHeader(HttpContent httpContent)
+        {
+            httpContent.Headers.Add("token", this.AccessToken);
+            httpContent.Headers.Add("loginid", this.LoginId.ToString());
         }
 
         private string GetMD5(string str)
@@ -245,7 +263,6 @@ namespace AmiLesson.Code
             var bytHash = md5.ComputeHash(bytValue);
             return BitConverter.ToString(bytHash).Replace("-", "").ToLower();
         }
-
 
 
         public class BathRoomListItem
@@ -303,9 +320,5 @@ namespace AmiLesson.Code
             public string leaveTimeStr { get; set; }
             public string createTimeStr { get; set; }
         }
-
-
-
-
     }
 }
