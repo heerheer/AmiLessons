@@ -4,7 +4,7 @@ using Quartz;
 
 namespace AmiLesson.Code.Jobs
 {
-    public class PreOrderJob:IJob
+    public class PreOrderJob : IJob
     {
         public static List<(string User, int LoginId, string Token)> UserWithAccessToken = new();
 
@@ -15,7 +15,8 @@ namespace AmiLesson.Code.Jobs
             {
                 var helper = new BathroomOrderHelper();
                 await helper.Login(item.user, item.pwd);
-                UserWithAccessToken.Add(new(item.user,helper.LoginId,helper.AccessToken));
+                UserWithAccessToken.Clear();
+                UserWithAccessToken.Add(new(item.user, helper.LoginId, helper.AccessToken));
             }
         }
     }

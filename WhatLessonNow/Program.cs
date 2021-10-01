@@ -20,17 +20,11 @@ namespace WhatLessonNow
 {
     internal class Program
     {
-        public class TipJob : IJob
-        {
-            public Task Execute(IJobExecutionContext context)
-            {
-                return Task.Factory.StartNew(() => { Console.WriteLine("Hello Quartz.Net"); });
-            }
-        }
 
         public static async Task Main(string[] args)
         {
-            var SchedulerFactory = new StdSchedulerFactory();
+            await Mainbalaba(args);
+            /*var SchedulerFactory = new StdSchedulerFactory();
             var Scheduler = await SchedulerFactory.GetScheduler();
             await Scheduler.Start();
             var job = JobBuilder.Create<TestJob>().Build();
@@ -40,7 +34,7 @@ namespace WhatLessonNow
                 .WithCronSchedule("0/4 0 * * * ? *")
                 .Build();
             Scheduler.ScheduleJob(job, trigger);
-            Console.ReadKey();
+            Console.ReadKey();*/
         }
 
         public static async Task Mainbalaba(string[] args)
@@ -59,19 +53,19 @@ namespace WhatLessonNow
 
                         if (helper.Logined)
                         {
-                            var list = helper.GetList().Result;
+                            /*var list = helper.GetList().Result;
                             var list2 = helper.GetRoomList(list.Find(x => x.name == "南区男浴室").id).Result;
 
                             var id = list2.Last(x => x.remain >= 0).id;
-                            Console.WriteLine($"正在为{item.Item1}预约{id}");
-                            var result = helper.Order(id).Result;
+                            Console.WriteLine($"正在为{item.Item1}预约{id}");*/
+                            var result = helper.Order(558).Result;
                             if (result.Item1)
                             {
                                 Console.WriteLine($"[{item.Item1}]预约成功->{result.message}");
                             }
                             else
                             {
-                                Console.WriteLine($"[{item.Item1}]预约失败!");
+                                Console.WriteLine($"[{item.Item1}]预约失败!->{result.message}");
                             }
                         }
                     });

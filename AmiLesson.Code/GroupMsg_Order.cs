@@ -1,10 +1,6 @@
 ﻿using Amiable.SDK.Enum;
 using Amiable.SDK.EventArgs;
 using Amiable.SDK.Interface;
-using Amiable.SDK.Tool.HIni;
-using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -193,55 +189,6 @@ namespace AmiLesson.Code
             sb.AppendLine($"账户登入情况:{(helper.Logined ? "成功" : "失败")}");
             sb.AppendLine($"自动预约开启状态:{(BathRoomConfigUtil.GetEnable(userId, "自动预约") ? "开启" : "关闭")}");
             ee.SendMessage(sb.ToString());
-        }
-    }
-
-    public class BathRoomConfigUtil
-    {
-        public static (string user, string pwd) GetAccount(long userId)
-        {
-            var file = new FileInfo(Path.Combine(AppContext.BaseDirectory, "Ami", "Bathroom", $"data.ini"));
-            if (file.Directory.Exists is false)
-                file.Directory.Create();
-            if (file.Exists is false)
-                file.Create().Close();
-            IniObject ini = new(file.FullName);
-            ini.Load();
-            return (ini[userId.ToString()]["user"], ini[userId.ToString()]["pwd"]);
-        }
-
-        public static void SetAutoOrderEnable(long userId, bool enable = true)
-        {
-            var file = new FileInfo(Path.Combine(AppContext.BaseDirectory, "Ami", "Bathroom", $"data.ini"));
-            if (file.Directory.Exists is false)
-                file.Directory.Create();
-            if (file.Exists is false)
-                file.Create().Close();
-            IniObject ini = new(file.FullName);
-            ini.Load();
-            ini[userId.ToString()]["自动预约"] = enable.ToString();
-            ini.Save();
-        }
-
-        public static bool GetEnable(long userId, string key)
-        {
-            var file = new FileInfo(Path.Combine(AppContext.BaseDirectory, "Ami", "Bathroom", $"data.ini"));
-
-            IniObject ini = new(file.FullName);
-            ini.Load();
-            return bool.Parse(ini[userId.ToString()][key]);
-        }
-
-        public static List<(long userId, string user, string pwd)> GetAllAutoOrderUser()
-        {
-            List<(long userId, string user, string pwd)> list = new();
-            var file = new FileInfo(Path.Combine(AppContext.BaseDirectory, "Ami", "Bathroom", $"data.ini"));
-
-            IniObject ini = new(file.FullName);
-            ini.Load();
-            ini.Sections.ForEach(x => { list.Add((long.Parse(x.SectionName), x["user"], x["pwd"])); });
-
-            return list;
         }
     }
 }

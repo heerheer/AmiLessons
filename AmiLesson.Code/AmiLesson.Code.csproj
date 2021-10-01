@@ -94,6 +94,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Analyzer.cs" />
+    <Compile Include="BathRoomConfigUtil.cs" />
     <Compile Include="BathroomOrderHelper.cs" />
     <Compile Include="Drawer.cs" />
     <Compile Include="EnableEvent.cs" />

@@ -123,10 +123,9 @@ namespace AmiLesson.Code
         }
 
 
-        public async Task<(bool succeed, string message)> Order(int id, int loginid, string accessToken)
+        public static async Task<(bool succeed, string message)> Order(int id, int loginid, string accessToken)
         {
-            if (!Logined)
-                return (false, "未登入");
+            var timestamp = DateTimeOffset.Now.ToUnixTimeMilliseconds(); //初始化时间戳
             var url =
                 $"http://ligong.deshineng.com:8082/brmclg/api/bathRoom/bookOrder?time={timestamp}&bookstatusid={id}";
             StringContent stringContent = new("");
@@ -144,7 +143,7 @@ namespace AmiLesson.Code
 
                     if (text == "Y")
                     {
-                        var order = JsonSerializer.Deserialize<List<OrderListItem>>(listJson)[0];
+                        var order = JsonSerializer.Deserialize<List<OrderListItem>>(listJson)?[0];
                         return (true, $"{order.bathRoomName}->时间{order.period}");
                     }
                     else
@@ -244,7 +243,7 @@ namespace AmiLesson.Code
             }
         }
 
-        private void AddHeader(HttpContent httpContent, int loginId, string accessToken)
+        private static void AddHeader(HttpContent httpContent, int loginId, string accessToken)
         {
             httpContent.Headers.Add("token", accessToken);
             httpContent.Headers.Add("loginid", loginId.ToString());
@@ -252,8 +251,7 @@ namespace AmiLesson.Code
 
         private void AddHeader(HttpContent httpContent)
         {
-            httpContent.Headers.Add("token", this.AccessToken);
-            httpContent.Headers.Add("loginid", this.LoginId.ToString());
+            AddHeader(httpContent, LoginId, AccessToken);
         }
 
         private string GetMD5(string str)

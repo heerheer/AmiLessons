@@ -44,12 +44,20 @@ namespace AmiLesson.Code
                 .WithCronSchedule("0 0 7 * * ? *")
                 .Build();
             Scheduler.ScheduleJob(orderJob, trigger2);
-
+            
+            var preorderJob = JobBuilder.Create<PreOrderJob>().Build();
+            var preorderTrigger = TriggerBuilder.Create()
+                .WithIdentity("Trigger_PreOrder")
+                .WithCronSchedule("0 50 6 * * ? *")
+                .Build();
+            Scheduler.ScheduleJob(preorderJob, preorderTrigger);
+            
+            
             var autoCheckOrderJob = JobBuilder.Create<CheckOrderJob>().Build();
             // ReSharper disable once SuspiciousTypeConversion.Global
             var autoCheckOrderTrigeer = TriggerBuilder.Create()
                 .WithIdentity("Trigger_CheckOrder")
-                .WithCronSchedule("0 0 14,16,18,20,21 * * ? *")
+                .WithCronSchedule("0 0 18,20,21 * * ? *")
                 .Build();
             Scheduler.ScheduleJob(autoCheckOrderJob, autoCheckOrderTrigeer);
 

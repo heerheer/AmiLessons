@@ -20,8 +20,7 @@ namespace AmiLesson.Code.Jobs
             {
                 var task = new Task(() =>
                 {
-                    var helper = new BathroomOrderHelper();
-                    var orderResult = helper.Order(558, item.LoginId, item.Token).Result;
+                    var orderResult = BathroomOrderHelper.Order(558, item.LoginId, item.Token).Result;
 
                     if (orderResult.succeed)
                         InnerLog($"[{item.User}]预约成功->{orderResult.message}", sb);
