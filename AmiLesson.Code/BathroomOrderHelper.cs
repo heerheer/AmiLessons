@@ -165,7 +165,7 @@ namespace AmiLesson.Code
             if (!Logined)
                 return false;
             var url =
-                $"http://ligong.deshineng.com:8082/brmclg/api/bathRoom/cancelClassRoomOrder?time={timestamp}&classroomorderid={id}";
+                $"http://ligong.deshineng.com:8082/brmclg/api/bathRoom/cancelOrder?time={timestamp}&bookorderid={id}";
             StringContent stringContent = new("");
             stringContent.Headers.ContentType = new("application/json");
             AddHeader(stringContent);

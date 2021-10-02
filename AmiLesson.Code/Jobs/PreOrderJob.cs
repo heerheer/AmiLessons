@@ -11,11 +11,11 @@ namespace AmiLesson.Code.Jobs
         public async Task Execute(IJobExecutionContext context)
         {
             var list = BathRoomConfigUtil.GetAllAutoOrderUser();
+            UserWithAccessToken.Clear();
             foreach (var item in list)
             {
                 var helper = new BathroomOrderHelper();
                 await helper.Login(item.user, item.pwd);
-                UserWithAccessToken.Clear();
                 UserWithAccessToken.Add(new(item.user, helper.LoginId, helper.AccessToken));
             }
         }

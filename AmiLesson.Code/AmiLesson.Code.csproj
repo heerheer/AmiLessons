@@ -100,6 +100,7 @@
     <Compile Include="EnableEvent.cs" />
     <Compile Include="GroupEvent.cs" />
     <Compile Include="GroupMsg_Order.cs" />
+    <Compile Include="Jobs\CancelOrderJob.cs" />
     <Compile Include="Jobs\CheckOrderJob.cs" />
     <Compile Include="Jobs\OrderJob.cs" />
     <Compile Include="Jobs\PreOrderJob.cs" />

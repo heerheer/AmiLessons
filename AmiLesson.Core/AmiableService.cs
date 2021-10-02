@@ -26,7 +26,7 @@ namespace Amiable.Core
             {
                 Name = "AmiLesson",
                 Author = "Heer Kaisair",
-                Version = "1.1.2",
+                Version = "1.2.2",
                 Description = "Ami课表Bot —— 在群里面发现自己要上什么课~",
                 AppId = "top.amiable.lesson"
             };

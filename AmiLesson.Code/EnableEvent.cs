@@ -53,13 +53,13 @@ namespace AmiLesson.Code
             Scheduler.ScheduleJob(preorderJob, preorderTrigger);
             
             
-            var autoCheckOrderJob = JobBuilder.Create<CheckOrderJob>().Build();
+            var autoCancelOrderJob = JobBuilder.Create<CancelOrderJob>().Build();
             // ReSharper disable once SuspiciousTypeConversion.Global
-            var autoCheckOrderTrigeer = TriggerBuilder.Create()
-                .WithIdentity("Trigger_CheckOrder")
-                .WithCronSchedule("0 0 18,20,21 * * ? *")
+            var autoCancelOrderTrigeer = TriggerBuilder.Create()
+                .WithIdentity("Trigger_CancelOrder")
+                .WithCronSchedule("0 40 21 * * ? *")
                 .Build();
-            Scheduler.ScheduleJob(autoCheckOrderJob, autoCheckOrderTrigeer);
+            Scheduler.ScheduleJob(autoCancelOrderJob, autoCancelOrderTrigeer);
 
             Console.WriteLine("[Ami自动预约助手]调度器启用完成");
         }
